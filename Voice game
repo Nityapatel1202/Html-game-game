@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Voice Controlled Game</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+        canvas {
+            display: block;
+        }
+        #character {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 50px;
+            height: 50px;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="character"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/annyang/2.6.1/annyang.min.js"></script>
+    <script>
+        // Character element
+        const character = document.getElementById('character');
+        let x = window.innerWidth / 2;
+        let y = window.innerHeight / 2;
+
+        // Update character position
+        function moveCharacter(dx, dy) {
+            x += dx;
+            y += dy;
+            character.style.left = x + 'px';
+            character.style.top = y + 'px';
+        }
+
+        // Voice commands
+        if (annyang) {
+            const commands = {
+                'up': () => moveCharacter(0, -10),
+                'down': () => moveCharacter(0, 10),
+                'left': () => moveCharacter(-10, 0),
+                'right': () => moveCharacter(10, 0)
+            };
+            annyang.addCommands(commands);
+            annyang.start();
+        }
+    </script>
+</body>
+</html>
